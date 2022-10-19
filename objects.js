@@ -90,7 +90,7 @@ const saveLocalStorage = (pizzasList) => {  //Esto sirve para "guardar en LocalS
     localStorage.setItem ('pizzas', JSON.stringify(pizzasList))  // Esto sirve para "guardar en LocalStorage"
 }
 
-// 4- Crear el elemento a renderizar 
+// 4-  Crear y Renderizar las pizzas y errores Crear el elemento a renderizar 
 
 const thisPizza = (pizzasLista) => 
 ` 
@@ -98,8 +98,6 @@ const thisPizza = (pizzasLista) =>
     <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzasLista.pizzaId}>
 </li>
 `;
-
-// 5- Renderizar las pizzas y errores
 
 const renderPizzasList = renderPizzas => pizzasLists.innerHTML += renderPizzas.map(pizza => thisPizza(pizza)).join('')
 
@@ -137,25 +135,17 @@ const hideDeleteAll = pizzasLists => {
 // 7- Formulario para agregar tareas
 
 const showPizza = event => {
-    event.preventDefault();                     //Con el preventDefault evitamos que la pagina se recargue cada vez que hagamos "SUBMIT"
+    event.preventDefault();                     
 
-    const idPizza = input.value;        //con .trim le sacamos los espacios del inicio y del final si es que hubieran
+    const idPizza = input.value;        
     let pizzaEncontrada = pizzas_variety.filter(pizza => pizza.id == idPizza);
-    //console.log(pizzaEncontrada[0].id);
-    console.log(idPizza);
     if(pizzaEncontrada[0] != undefined) {
-        console.log('entra')
         renderPizzasList(pizzaEncontrada)
     } else if (idPizza) {
         crearRenderErrorNumber()
-
-        console.log('sale')
     } else {
         crearRenderErrorId()
     }
-    
-
-
 
     /* if (!idPizza.length){                              
         ` 
@@ -177,39 +167,27 @@ const showPizza = event => {
     hideDeleteAll(pizzas);        //Verifico    */        
 }
 
-//Vamos a usar la variable del punto 2, "tasks" va a ser la variable que nos va a permitir a nosotros saber que renderizar, cuando renderizarlo y que es lo que vamos a hacer. Todo va a pasar por "tasks". Tasks era un array de objetos que vamos a utilizar para renderizar.
-//Colocar "...tasks" es mantener todas las tareas que teniamos y le agrego un objeto nuevo con name: taskName, taskId: tasks.length + 1
-//Colocar tasks.length + 1 hacemos que sea las tareas siempre sean incrementales.
-//Luego de tener el objeto nuevo creado y tener el preventDefault con el submit evitando que se reinicie la pagina vamos a obligar al input colocando "input.vale = ''" (Colocamos un string vacio) a que se reinicien los input anteriores.
-//con renderTaskList(tasks); Renderizamos renderTaskList - Del punto 5 - y le pasamos las tasks (todas las tareas que tengamos)
-//con saveLocalStorage(tasks); Guardamos en Local Storage a las tasks
-//con hideDeleteAll(tasks); Verifico si hay tareas o no para que aparezca el boton.
-
 
 //Lo siguiente que vamos a hacer es atrapar el id del punto 4 y hacer que suceda el evento de eliminar la tarea al tocar la imagen del "tachito" en lugar de tocar a todo el elemento.
 
 const removePizza = eventremove => {   
-    if(!eventremove.target.classList.contains('delete-btn'))       //Si hago click en otro lugar que no sea la img del "tachito" no hace nada
-    return;                                                            // Si contiene la imagen del tachico, borra.
+    if(!eventremove.target.classList.contains('delete-btn'))
+    return;                                                            
 
-    const filterId = Number(eventremove.target.dataset.id);         //Accedemos al numero que el sistema me lo brinda como string sobre el ID
+    const filterId = Number(eventremove.target.dataset.id);
 
-    //Si queremos borrar un elemento de tasklists... 
-    pizzas = pizzas.filter( pizzas => pizzas.pizzaId !== filterId)  // Hace que borremos la tarea individual que queramos en base a su unico ID
+     
+    pizzas = pizzas.filter( pizzas => pizzas.pizzaId !== filterId)
     renderPizzasList(pizzas);
     saveLocalStorage(pizzas);
     hideDeleteAll(pizzas);
 }
 
-//IMPORTANTE Al lado de .Contains debe ir la clase del buton (Del LI que se agrega desde JS)
-
-// 8- Funcionamiento del Boton para Remover todas.
-
 const removeAllPizzas = () => {
-    pizzas = [];                     //Vaciamos los arrays de objetos construidos anteriormente al final del punto 7
-    renderPizzasList(pizzas);                                          // Renderizamos un array vacio
-    saveLocalStorage(pizzas);                                        // Guardo un array vacio (no guardamos nada en LS)
-    hideDeleteAll(pizzas);                                           // Verifico si corresponde el boton de "eliminar tareas" o no.
+    pizzas = [];                     
+    renderPizzasList(pizzas);                                          
+    saveLocalStorage(pizzas);                                        
+    hideDeleteAll(pizzas);                                           
 }
 
 // 9- Funciones para inicializar
