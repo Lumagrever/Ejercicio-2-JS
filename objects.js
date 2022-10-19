@@ -90,20 +90,22 @@ const saveLocalStorage = (pizzasList) => {  //Esto sirve para "guardar en LocalS
     localStorage.setItem ('pizzas', JSON.stringify(pizzasList))  // Esto sirve para "guardar en LocalStorage"
 }
 
+saveLocalStorage(pizzas_variety)
+
 // 4- Crear el elemento a renderizar 
 
-const thisPizza = (pizzas) =>
+const thisPizza = (pizzasLista) => 
 ` 
-<li> <h2>${pizzas.nombre}</h2> <h3>${pizzas.precio}</h3>
-    <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzas.pizzaId}>
+<li> <h2>${pizzasLista.nombre}</h2> <h3>${pizzasLista.precio}</h3>
+    <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzasLista.pizzaId}>
 </li>
-` ;
+`;
 
 // 5- Renderizar la o las pizzas
 
-const renderPizzasList = renderPizzas => pizzasLists.innerHTML = renderPizzas.map(thisPizza(pizzas)).join('');
-
-
+const renderPizzasList = renderPizzas => {                                 
+    pizzasLists.innerHTML = renderPizzas.map(pizza => thisPizza(pizza)).join('')
+}
 
 // 6- Verificar si el boton delete all se muestra o no.
 
@@ -113,29 +115,25 @@ const hideDeleteAll = pizzasLists => {
         return;                                 
     }
     allDeleteBtn.classList.remove('hidden'); 
-};
+}
+
 // 7- Formulario para agregar tareas
 
-const showPizza = (event) => {
+const showPizza = event => {
     event.preventDefault();                     //Con el preventDefault evitamos que la pagina se recargue cada vez que hagamos "SUBMIT"
 
     const idPizza = input.value.trim();        //con .trim le sacamos los espacios del inicio y del final si es que hubieran
-    console.log(idPizza);
-    if (idPizza) {
-        let pizzaEncontrada = pizzas_variety.filter(pizza => pizza.id == idPizza)   
-        renderPizzasList(pizzaEncontrada);                       
-    /*return ` 
-    <li> ${pizzas.name} <h2>Por favor escriba el ID de alguna pizza de la lista</h2>
+
+    if (!idPizza.length){                              
+        ` 
+<li> <h2>${pizzas_variety.name}</h2> <h3>${pizzas_variety.precio}</h3>
     <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzas.pizzaId}>
-    </li>
-    `*/;
-    }
-     else if (pizzas.some( pizza => pizza.name.toLowerCase() === idPizza.toLowerCase())) { //con .some revisamos si hay tareas de nombres iguales 
-    return` 
-    <li> ${pizzas.name} <h2>Por favor escriba el ID de alguna pizza de la lista</h2>
-    <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzas.pizzaId}>
-    </li>
-    `;                                                                                                          
+</li>
+`;      
+        return                                          
+    } else if (pizzas.some( pizza => pizza.name.toLowerCase() === idPizza.toLowerCase())) { //con .some revisamos si hay tareas de nombres iguales 
+        alert(`¡Ups! Parece que ya tenes esa pizza en el mostrador`)                        //Si hay tareas con el mismo nombre, avisamos con alerta.
+        return;                                                                                   
     }
 
     pizzas = [...pizzas, { name: idPizza, pizzaId: pizzas.length + 1 }];
