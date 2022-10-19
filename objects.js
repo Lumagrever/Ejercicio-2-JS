@@ -99,11 +99,30 @@ const thisPizza = (pizzasLista) =>
 </li>
 `;
 
-// 5- Renderizar la o las pizzas
+// 5- Renderizar las pizzas y errores
 
-const renderPizzasList = renderPizzas => {                                 
-    pizzasLists.innerHTML += renderPizzas.map(pizza => thisPizza(pizza)).join('')
+const renderPizzasList = renderPizzas => pizzasLists.innerHTML += renderPizzas.map(pizza => thisPizza(pizza)).join('')
+
+
+const renderErrorNumber = () => {
+    return `
+    <li> <h2>Intenta colocar un número </h2>
+    <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas">
+    </li>
+    `
 }
+
+const crearRenderErrorNumber = () => pizzasLists.innerHTML += renderErrorNumber();
+
+const renderErrorId = () => {
+    return `
+    <li> <h2>Ingresa un número de pizza valido</h2>
+    <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas">
+    </li>
+    `
+}
+
+const crearRenderErrorId = () => pizzasLists.innerHTML += renderErrorId();
 
 // 6- Verificar si el boton delete all se muestra o no.
 
@@ -122,14 +141,17 @@ const showPizza = event => {
 
     const idPizza = input.value;        //con .trim le sacamos los espacios del inicio y del final si es que hubieran
     let pizzaEncontrada = pizzas_variety.filter(pizza => pizza.id == idPizza);
-    console.log(pizzaEncontrada[0].id);
+    //console.log(pizzaEncontrada[0].id);
     console.log(idPizza);
-    if(idPizza == pizzaEncontrada[0].id) {
+    if(pizzaEncontrada[0] != undefined) {
         console.log('entra')
         renderPizzasList(pizzaEncontrada)
-    } else {
+    } else if (idPizza) {
+        crearRenderErrorNumber()
 
         console.log('sale')
+    } else {
+        crearRenderErrorId()
     }
     
 
@@ -193,7 +215,7 @@ const removeAllPizzas = () => {
 // 9- Funciones para inicializar
 
 const init = () => {
-    renderPizzasList(pizzas);
+    //renderPizzasList(pizzas);
     saveLocalStorage(pizzas_variety)
     searchPizza.addEventListener('submit', showPizza);
     pizzasLists.addEventListener('click', removePizza);
