@@ -90,8 +90,6 @@ const saveLocalStorage = (pizzasList) => {  //Esto sirve para "guardar en LocalS
     localStorage.setItem ('pizzas', JSON.stringify(pizzasList))  // Esto sirve para "guardar en LocalStorage"
 }
 
-saveLocalStorage(pizzas_variety)
-
 // 4- Crear el elemento a renderizar 
 
 const thisPizza = (pizzasLista) => 
@@ -104,7 +102,7 @@ const thisPizza = (pizzasLista) =>
 // 5- Renderizar la o las pizzas
 
 const renderPizzasList = renderPizzas => {                                 
-    pizzasLists.innerHTML = renderPizzas.map(pizza => thisPizza(pizza)).join('')
+    pizzasLists.innerHTML += renderPizzas.map(pizza => thisPizza(pizza)).join('')
 }
 
 // 6- Verificar si el boton delete all se muestra o no.
@@ -122,9 +120,22 @@ const hideDeleteAll = pizzasLists => {
 const showPizza = event => {
     event.preventDefault();                     //Con el preventDefault evitamos que la pagina se recargue cada vez que hagamos "SUBMIT"
 
-    const idPizza = input.value.trim();        //con .trim le sacamos los espacios del inicio y del final si es que hubieran
+    const idPizza = input.value;        //con .trim le sacamos los espacios del inicio y del final si es que hubieran
+    let pizzaEncontrada = pizzas_variety.filter(pizza => pizza.id == idPizza);
+    console.log(pizzaEncontrada[0].id);
+    console.log(idPizza);
+    if(idPizza == pizzaEncontrada[0].id) {
+        console.log('entra')
+        renderPizzasList(pizzaEncontrada)
+    } else {
 
-    if (!idPizza.length){                              
+        console.log('sale')
+    }
+    
+
+
+
+    /* if (!idPizza.length){                              
         ` 
 <li> <h2>${pizzas_variety.name}</h2> <h3>${pizzas_variety.precio}</h3>
     <img class="delete-btn" src= "./assets/Trash.png" alt="Botón para borrar las pizzas" data-id=${pizzas.pizzaId}>
@@ -141,7 +152,7 @@ const showPizza = event => {
 
     renderPizzasList(pizzas);       //Renderizo 
     saveLocalStorage(pizzas);     //Guardo en LS           
-    hideDeleteAll(pizzas);        //Verifico           
+    hideDeleteAll(pizzas);        //Verifico    */        
 }
 
 //Vamos a usar la variable del punto 2, "tasks" va a ser la variable que nos va a permitir a nosotros saber que renderizar, cuando renderizarlo y que es lo que vamos a hacer. Todo va a pasar por "tasks". Tasks era un array de objetos que vamos a utilizar para renderizar.
@@ -183,6 +194,7 @@ const removeAllPizzas = () => {
 
 const init = () => {
     renderPizzasList(pizzas);
+    saveLocalStorage(pizzas_variety)
     searchPizza.addEventListener('submit', showPizza);
     pizzasLists.addEventListener('click', removePizza);
     allDeleteBtn.addEventListener('click', removeAllPizzas);
