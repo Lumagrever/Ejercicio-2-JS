@@ -38,6 +38,12 @@ body{
     width: 60px;
 }
 
+#span-explain {
+   font-size: 1.3rem;
+   color: var(--celeste);
+   font-weight: bold;
+}
+
 .flex-margin {
     margin-top: 30px;
     display: flex;
@@ -108,7 +114,7 @@ body{
 
 .pizzas-lists li {
     background: white;
-    border: 3px solid grey;
+    border: 3px solid var(--dorado);
     color: var(--oscuro);
     font-weight: bold;
     font-size: 1.5rem;
@@ -121,39 +127,14 @@ body{
     user-select: none;
 }
 
-.pizzas-lists img {
-    width: 35px;
-    cursor: pointer;
-    background-color: var(--coral);
-    border-radius: 5px;
-    padding: 3px;
+.li-error h2{
+    font-size: 1.5rem;
 }
 
 .pizzas-lists img:hover {
     transition: 300ms;
     background-color: var(--rojo);
 }
-
-.all-delete-btn{
-    font-size: 1.5rem;
-    font-weight: 500;
-    border: 0;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: var(--dorado);
-    color: var(--oscuro);
-    margin-top: 50px;
-}
-
-.all-delete-btn:hover {
-    background-color: var(--rojo);
-    color: white;
-}
-
-.hidden {
-    visibility: hidden;
-  }
 
 .footer-container p {
     color: var(--dorado);
@@ -169,6 +150,12 @@ body{
 }
 
 @media (max-width: 576px) {
+
+    #span-explain {
+        font-size: 0.9rem;
+        text-align: center;
+        justify-content: center;
+     }
     .pizza-search-section {
         font-size: 1.5rem;
         
@@ -184,7 +171,6 @@ body{
     
     .search-pizza {
         gap: 1.2rem;
-
     }
 
     .search-pizza button {
@@ -217,10 +203,8 @@ body{
     .pizzas-lists img {
         width: 30px;
     }
-    
-    .all-delete-btn{
-        font-size: 1.2rem;
-        padding: 5px 3;
-        margin-top: 30px;
+
+    .li-error h2{
+        font-size: 1rem;
     }
 }
