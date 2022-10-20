@@ -78,7 +78,6 @@ const pizzas_variety = [
 const input = document.querySelector('.input-number-pizza') // Input number de HTML
 const searchPizza = document.querySelector('.search-pizza') // form en html
 const pizzasLists = document.querySelector('.pizzas-lists') // listas renderizadas
-const allDeleteBtn = document.querySelector('.all-delete-btn') // Boton que borra todas las pizzas en html
 
 // 2- Traer elementos del LS si existen
 
